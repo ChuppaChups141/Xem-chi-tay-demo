@@ -17,16 +17,19 @@ interface UserFormData {
   gender: 'male' | 'female';
 }
 
-export default function PalmReadingForm() {
-  const [formData, setFormData] = useState<UserFormData>({
-    name: '',
-    gender: 'male',
-  });
+interface PalmReadingFormProps {
+  onSubmit: (data: UserFormData) => void;
+  initialData: UserFormData;
+}
+
+export default function PalmReadingForm({ onSubmit, initialData }: PalmReadingFormProps) {
+  const [formData, setFormData] = useState<UserFormData>(initialData);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // TODO: Handle form submission
-    console.log('Form submitted:', formData);
+    if (formData.name.trim()) {
+      onSubmit(formData);
+    }
   };
 
   return (
